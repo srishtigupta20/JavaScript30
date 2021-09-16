@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scoped CSS Variables and JS</title>
+</head>
+<body>
+  <h2>Update CSS Variables with <span class='hl'>JS</span></h2>
+
+  <div class="controls">
+    <label for="spacing">Spacing:</label>
+    <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px" 
+    data-name="wes" data-cool ="💩">
+
+    <label for="blur">Blur:</label>
+    <input id="blur" type="range" name="blur" min="0" max="25" value="10" data-sizing="px" data-name="wes" data-cool ="💩">
+
+    <label for="base">Base Color</label>
+    <input id="base" type="color" name="base" value="#ffc600">
+  </div>
+
+  <img src="https://lh3.googleusercontent.com/tTyQUSCZkWwIpDYRuDZJ7JWa5V-UuDR8CL1cmg9-URLCGQrljzR47gG9hwdhmebT16GxuSEvWltdU2brM2GRouJUcthZYpiR2G24cFvFlqQ6CN4ak-OC3hC8dwytWWG9XVqFLooshHZlXuiqUqmtJJUB1wfRe7hSUCZ2qy1Eeky99jMhnbSAROu64Y9lZuUDnFU563lIN6w4aEvmpa0Rsp2xRz7z_HIUGYTavbNM4vHiR5NJOnePv33-wC1hVCP546AFY72Li-fNmyEp2-My42nLUi8KVRJHLgCNxmh3MaGaLjUSZZn7ST5D7cny3-QKx_FsWoi25G8xSNaJlue1tfw4k8qUE1NdpNKWokPDSrGmUJn_hJond9LFTH1qkNLV4dbnFKDmon9TOAfU8M-Ii6bAGIaE_KIco3pEryQFiXXkW6evgSPtrs7be4ld_lA-erQGF70xO-Ffa55pup1_NbBj6dBN44tNJdnPMM_6eS7EupCuukhlizcWOJ9UeAAOf7GnC8D5XJQJYOzzjI-LRGYf2UiXahBuu_lwbfnQUAKVJL4I9cHxbfpz7_gdQmkdT23cMoRCTeyencf_j-PRzxtRdYhP-maNO35MkL0BpY42HdyF6gL2NV0CsJ1S_BJXK7LcswOdWMQ-2h8BUiSh7iGMRk3kP22ey2_eX1-YmkVRC82kcK03iAsb_anW6fxWXAyxQUtnk4JAEZmpq-0bqK98Fw=w1920-h1080-no?authuser=0">
+
+  <style>
+       :root {
+           --base: #ffc600;
+           --spacing: 10px;
+           --blur: 10px;
+       }
+
+       img {
+           padding: var(--spacing);
+           background: var(--base);
+           filter: blur(var(--blur));
+           width: 60%;
+           height:50%;
+       }
+
+       .h1 {
+           color: var(--base);
+       }
+
+    /*
+      misc styles, nothing to do with CSS variables
+    */
+
+    body {
+      text-align: center;
+      background: #193549;
+      color: white;
+      font-family: 'helvetica neue', sans-serif;
+      font-weight: 100;
+      font-size: 50px;
+    }
+
+    .controls {
+      margin-bottom: 50px;
+    }
+
+    input {
+      width: 100px;
+    }
+  </style>
+
+  <script>
+     const inputs = document.querySelectorAll('.controls input');
+
+     function handleUpdate() {
+         const suffix = this.dataset.sizing || '' ;
+         document.documentElement.style.setProperty(`--${this.name}`, this.value +suffix);
+        
+     }
+
+     inputs.forEach(input => input.addEventListener('change',handleUpdate));
+
+     inputs.forEach(input => input.addEventListener('mousemove',handleUpdate));
+  </script>
+
+</body>
+</html>
